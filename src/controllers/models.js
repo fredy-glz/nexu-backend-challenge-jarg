@@ -15,6 +15,7 @@ const updateModel = async (req, res = response) => {
     // Update model
     return res.status(200).json({ msg: 'Model updated successfully' });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ msg: 'Something went wrong' });
   }
 };
@@ -27,6 +28,7 @@ const getModels = async (req, res = response) => {
     const resp = await getModelDb(greater, lower);
     return res.status(200).json(resp);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ msg: 'Something went wrong' });
   }
 };

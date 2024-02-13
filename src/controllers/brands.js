@@ -15,6 +15,7 @@ const getBrands = async (req, res = response) => {
     const resp = await getBrandsDb();
     return res.status(200).json(resp);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ msg: 'Something went wrong' });
   }
 };
@@ -32,6 +33,7 @@ const getModelsByBrandId = async (req, res = response) => {
     }
     return res.status(200).json(models);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ msg: 'Something went wrong' });
   }
 };
@@ -50,6 +52,7 @@ const addBrand = async (req, res = response) => {
     await addBrandDb(name);
     return res.status(201).json({ msg: 'Brand added successfully' });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ msg: 'Something went wrong' });
   }
 };
@@ -82,6 +85,7 @@ const addModelByBrandId = async (req, res = response) => {
     await addModelDb(name, averagePrice || 0, brandId);
     return res.status(201).json({ msg: 'Model added successfully' });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ msg: 'Something went wrong' });
   }
 };
