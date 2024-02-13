@@ -9,13 +9,12 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-connection.connect();
-//   (err) => {
-//   if (!err) {
-//     console.log('Database connected successfully');
-//   } else {
-//     console.log(err);
-//   }
-// }
+connection.connect((err) => {
+  if (!err) {
+    console.log('Database connected successfully');
+  } else {
+    console.log(err);
+  }
+});
 
 module.exports = { connection };
