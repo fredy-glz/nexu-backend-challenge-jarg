@@ -25,7 +25,7 @@ const getModelsByBrandId = async (req, res = response) => {
 
   try {
     // Get models by brandId
-    const models = await getModelsByBrandIdDb(brandId);
+    const [models] = await getModelsByBrandIdDb(brandId);
 
     // Check if brand does not exist
     if (models.length === 0) {
@@ -43,7 +43,7 @@ const addBrand = async (req, res = response) => {
 
   try {
     // Check if brand already exist
-    const results = await validateExistBrandByNameDb(name);
+    const [results] = await validateExistBrandByNameDb(name);
     if (results[0].count > 0) {
       return res.status(409).json({ msg: 'Brand already exist' });
     }
@@ -70,13 +70,13 @@ const addModelByBrandId = async (req, res = response) => {
 
   try {
     // Check if brand does not exist
-    const brandsResult = await validateExistBrandByIdDb(brandId);
+    const [brandsResult] = await validateExistBrandByIdDb(brandId);
     if (brandsResult[0].count === 0) {
       return res.status(404).json({ msg: 'Brand not found' });
     }
 
     // Check if model already exist¿
-    const modelsResult = await validateExistModelByNameDb(name);
+    const [modelsResult] = await validateExistModelByNameDb(name);
     if (modelsResult[0].count > 0) {
       return res.status(409).json({ msg: 'Model already exist' });
     }
