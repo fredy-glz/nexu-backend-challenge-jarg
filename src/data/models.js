@@ -1,8 +1,12 @@
-const pool = require('../db/config');
+// const pool = require('../db/config');
+const util = require('util');
+const { connection } = require('../db/config');
+
+const dbQuery = util.promisify(connection.query).bind(connection);
 
 const updateModelDb = async (averagePrice, modelId) => {
   const query = 'UPDATE model SET average_price = ? WHERE id = ?';
-  return await pool.query(query, [averagePrice, modelId]);
+  return await dbQuery(query, [averagePrice, modelId]);
 };
 
 const getModelDb = async (greater, lower) => {
@@ -19,7 +23,7 @@ const getModelDb = async (greater, lower) => {
     params.push(parseInt(lower));
   }
 
-  return await pool.query(query, params);
+  return await dbQuery(query, params);
 };
 
 module.exports = { updateModelDb, getModelDb };
