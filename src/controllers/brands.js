@@ -1,16 +1,18 @@
 const { response } = require('express');
-const util = require('util');
-const { connection } = require('../db/config');
-
-const dbQuery = util.promisify(connection.query).bind(connection);
+const {
+  getBrandsDb,
+  getModelsByBrandIdDb,
+  addBrandDb,
+  validateExistModelByNameDb,
+  addModelDb,
+  validateExistBrandByIdDb,
+  validateExistBrandByNameDb,
+} = require('../data/brands');
 
 const getBrands = async (req, res = response) => {
-  const query =
-    'SELECT b.id, b.name, COALESCE(ROUND(AVG(m.average_price)), 0) AS average_price FROM brand b LEFT JOIN model m ON b.id = m.brand_id GROUP BY b.id, b.name ORDER BY b.id';
-
   try {
     // Get brands
-    const resp = await dbQuery(query);
+    const resp = await getBrandsDb();
     return res.status(200).json(resp);
   } catch (error) {
     return res.status(500).json({ msg: 'Something went wrong' });
@@ -19,11 +21,10 @@ const getBrands = async (req, res = response) => {
 
 const getModelsByBrandId = async (req, res = response) => {
   const brandId = req.params.id;
-  const query = 'SELECT id, name, average_price FROM model WHERE brand_id=?';
 
   try {
     // Get models by brandId
-    const models = await dbQuery(query, [brandId]);
+    const models = await getModelsByBrandIdDb(brandId);
 
     // Check if brand does not exist
     if (models.length === 0) {
@@ -37,18 +38,16 @@ const getModelsByBrandId = async (req, res = response) => {
 
 const addBrand = async (req, res = response) => {
   const { name } = req.body;
-  let query = 'SELECT COUNT(*) AS count FROM brand WHERE name=?';
 
   try {
     // Check if brand already exist
-    const results = await dbQuery(query, [name]);
+    const results = await validateExistBrandByNameDb(name);
     if (results[0].count > 0) {
       return res.status(409).json({ msg: 'Brand already exist' });
     }
 
     // Add brand
-    query = 'INSERT INTO brand (name) VALUES (?)';
-    await dbQuery(query, [name]);
+    await addBrandDb(name);
     return res.status(201).json({ msg: 'Brand added successfully' });
   } catch (error) {
     return res.status(500).json({ msg: 'Something went wrong' });
@@ -66,26 +65,21 @@ const addModelByBrandId = async (req, res = response) => {
       .json({ msg: 'Average price must be greater than 100,000.' });
   }
 
-  let query = 'SELECT COUNT(*) AS count FROM brand WHERE id=?';
-
   try {
     // Check if brand does not exist
-    const brandsResult = await dbQuery(query, [brandId]);
+    const brandsResult = await validateExistBrandByIdDb(brandId);
     if (brandsResult[0].count === 0) {
       return res.status(404).json({ msg: 'Brand not found' });
     }
 
-    // Check if model already exist
-    query = 'SELECT COUNT(*) AS count FROM model WHERE name=?';
-    const modelsResult = await dbQuery(query, [name]);
+    // Check if model already exist¿
+    const modelsResult = await validateExistModelByNameDb(name);
     if (modelsResult[0].count > 0) {
       return res.status(409).json({ msg: 'Model already exist' });
     }
 
     // Add model by brandId
-    query =
-      'INSERT INTO model (name, average_price, brand_id) VALUES (?, ?, ?)';
-    await dbQuery(query, [name, averagePrice || 0, brandId]);
+    await addModelDb(name, averagePrice || 0, brandId);
     return res.status(201).json({ msg: 'Model added successfully' });
   } catch (error) {
     return res.status(500).json({ msg: 'Something went wrong' });
@@ -96,5 +90,5 @@ module.exports = {
   getBrands,
   getModelsByBrandId,
   addBrand,
-  addModelByBrandId
+  addModelByBrandId,
 };

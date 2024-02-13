@@ -1,9 +1,9 @@
 const express = require('express');
 const {
-  getBrands,
   getModelsByBrandId,
   addBrand,
-  addModelByBrandId
+  addModelByBrandId,
+  getBrands,
 } = require('../controllers/brands');
 
 const router = express.Router();

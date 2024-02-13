@@ -1,6 +1,10 @@
 {
   "extends": "standard",
   "rules": {
-    "semi": [2, "always"]
+    "semi": [2, "always"],
+    "comma-dangle": ["error", "always-multiline"]
+  },
+  "env": {
+    "jest": true
   }
 }
