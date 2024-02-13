@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "7b4e0c3f-9db9-4c5f-81a8-18071ea8613d",
+		"name": "Nexu Backend Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7438179"
+	},
+	"item": [
+		{
+			"name": "Brands - getBrands",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://nexu-backend-challenge-jarg-production.up.railway.app/api/brands",
+					"protocol": "https",
+					"host": [
+						"nexu-backend-challenge-jarg-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"api",
+						"brands"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Brands - addBrand",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"BMW\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nexu-backend-challenge-jarg-production.up.railway.app/api/brands",
+					"protocol": "https",
+					"host": [
+						"nexu-backend-challenge-jarg-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"api",
+						"brands"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Brands - addModelByBrandId",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"ILX\",\r\n    \"average_price\": 100000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nexu-backend-challenge-jarg-production.up.railway.app/api/brands/0/models",
+					"protocol": "https",
+					"host": [
+						"nexu-backend-challenge-jarg-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"api",
+						"brands",
+						"0",
+						"models"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Brands  - getModelsByBrandId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://nexu-backend-challenge-jarg-production.up.railway.app/api/brands/1/models",
+					"protocol": "https",
+					"host": [
+						"nexu-backend-challenge-jarg-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"api",
+						"brands",
+						"1",
+						"models"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Models - updateAveragePriceModel",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"average_price\": 303176\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nexu-backend-challenge-jarg-production.up.railway.app/api/models/1",
+					"protocol": "https",
+					"host": [
+						"nexu-backend-challenge-jarg-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"api",
+						"models",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Models - getModels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://nexu-backend-challenge-jarg-production.up.railway.app/api/models?lower=400000",
+					"protocol": "https",
+					"host": [
+						"nexu-backend-challenge-jarg-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"api",
+						"models"
+					],
+					"query": [
+						{
+							"key": "lower",
+							"value": "400000"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
